@@ -14,10 +14,10 @@ import androidx.room.PrimaryKey
 )
 data class TaskEntity(
     val name: String,
-    val completed: Boolean,
-    val created: Long,
-    val deadline: Long,
-    val isImportant: Boolean,
+    val completed: Boolean = false,
+    val created: Long = System.currentTimeMillis(),
+    val deadline: Long? = null,
+    val isImportant: Boolean = false,
     val category: String,
     @PrimaryKey val id: Int? = null
 )

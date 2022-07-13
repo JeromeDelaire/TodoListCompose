@@ -39,11 +39,15 @@ class TodoListRepositoryImpl(
         taskDao.deleteTask(task.toTaskEntity())
     }
 
-    override fun getTasks(category: String?): Flow<List<Task>> {
-        return taskDao.getTasks(category).map { entities ->
+    override fun getTasks(category: String?, searchQuery: String): Flow<List<Task>> {
+        return taskDao.getTasks(category, searchQuery).map { entities ->
             entities.map {
                 it.toTask()
             }
         }
+    }
+
+    override suspend fun getTask(id: Int): Task {
+        return taskDao.getTask(id)
     }
 }

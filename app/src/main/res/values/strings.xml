@@ -1,6 +1,23 @@
 <resources>
-    <string name="app_name">TodoList</string>
+    <string name="app_name">Todo list</string>
     <string name="error_task_name_blank">Task name cannot be blank</string>
     <string name="error_no_category">You need choose a category</string>
     <string name="error_category_name_blank">Category name cannot be blank</string>
+    <string name="name">Name</string>
+    <string name="date">Date</string>
+    <string name="deadline">Deadline</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="order_by">Order by</string>
+    <string name="all">All</string>
+    <string name="menu">Menu</string>
+    <string name="more">More</string>
+    <string name="categories">Categories</string>
+    <string name="add_category">Add category</string>
+    <string name="completed">Completed</string>
+    <string name="delete_selected_tasks">Delete selected tasks</string>
+    <string name="error_during_add_category">Category not added</string>
+    <string name="add_task">Add task</string>
+    <string name="search_clear">Search clear</string>
+    <string name="search_for_tasks">Search a task...</string>
 </resources>

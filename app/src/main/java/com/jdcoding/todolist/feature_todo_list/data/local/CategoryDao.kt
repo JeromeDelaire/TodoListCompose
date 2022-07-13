@@ -1,14 +1,17 @@
 package com.jdcoding.todolist.feature_todo_list.data.local
 
-import androidx.room.*
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy.ABORT
+import androidx.room.Query
 import com.jdcoding.todolist.feature_todo_list.data.local.entity.CategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = ABORT)
     suspend fun insertCategory(categoryEntity: CategoryEntity)
 
     @Delete

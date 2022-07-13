@@ -15,5 +15,7 @@ interface TodoListRepository {
 
     suspend fun deleteTask(task: Task)
 
-    fun getTasks(category: String?) : Flow<List<Task>>
+    fun getTasks(category: String?, searchQuery: String) : Flow<List<Task>>
+
+    suspend fun getTask(id: Int): Task
 }

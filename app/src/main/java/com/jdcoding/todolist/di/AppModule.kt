@@ -10,6 +10,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -40,16 +42,22 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTodoListUseCase(repository: TodoListRepository): TodoListUseCases {
+    fun provideTodoListUseCases(repository: TodoListRepository): TodoListUseCases {
         return TodoListUseCases(
             addCategory = AddCategory(repository),
             addTask = AddTask(repository),
             deleteCategory = DeleteCategory(repository),
             deleteTask = DeleteTask(repository),
-            getCategory = GetCategory(repository),
+            getCategories = GetCategories(repository),
             getTasks = GetTasks(repository),
+            getTask = GetTask(repository)
         )
     }
+
+    @ApplicationScope
+    @Provides
+    @Singleton
+    fun provideApplicationScope() = CoroutineScope(SupervisorJob())
 }
 
 @Retention(AnnotationRetention.RUNTIME)

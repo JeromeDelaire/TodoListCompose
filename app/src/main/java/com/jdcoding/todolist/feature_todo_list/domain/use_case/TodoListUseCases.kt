@@ -5,6 +5,7 @@ data class TodoListUseCases (
     val addTask: AddTask,
     val deleteCategory: DeleteCategory,
     val deleteTask: DeleteTask,
-    val getCategory: GetCategory,
-    val getTasks: GetTasks
+    val getCategories: GetCategories,
+    val getTasks: GetTasks,
+    val getTask: GetTask
 )

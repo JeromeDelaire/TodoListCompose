@@ -2,6 +2,7 @@ package com.jdcoding.todolist.feature_todo_list.domain.use_case
 
 import com.jdcoding.todolist.feature_todo_list.domain.model.Task
 import com.jdcoding.todolist.feature_todo_list.domain.repository.TodoListRepository
+import com.jdcoding.todolist.feature_todo_list.domain.util.OrderType
 import com.jdcoding.todolist.feature_todo_list.domain.util.TaskOrder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -12,31 +13,59 @@ class GetTasks(
 
     operator fun invoke(
         taskOrder: TaskOrder,
-        categoryName: String?
+        categoryName: String? = null,
+        searchQuery: String = ""
     ): Flow<List<Task>> {
         return when(taskOrder) {
             is TaskOrder.Name -> {
-                repository.getTasks(categoryName).map { tasks ->
+                repository.getTasks(categoryName, searchQuery).map { tasks ->
                     tasks.sortedWith(
-                        compareBy(Task::isImportant, Task::name)
+                        when(taskOrder.orderType) {
+                            is OrderType.Ascending -> {
+                                compareBy<Task> { !it.isImportant} .thenBy { it.name }
+                            }
+
+                            is OrderType.Descending -> {
+                                compareBy<Task> { !it.isImportant} .thenByDescending { it.name }
+                            }
+                        }
                     )
                 }
             }
             is TaskOrder.Date -> {
-                repository.getTasks(categoryName).map { tasks ->
+                repository.getTasks(categoryName, searchQuery).map { tasks ->
                     tasks.sortedWith(
-                        compareBy(Task::isImportant, Task::created)
+                        when(taskOrder.orderType) {
+                            is OrderType.Ascending -> {
+                                compareBy<Task> { !it.isImportant} .thenBy { it.created }
+                            }
+
+                            is OrderType.Descending -> {
+                                compareBy<Task> { !it.isImportant} .thenByDescending { it.created }
+                            }
+                        }
                     )
                 }
             }
-            is TaskOrder.Date -> {
-                repository.getTasks(categoryName).map { tasks ->
+            is TaskOrder.Deadline -> {
+                repository.getTasks(categoryName, searchQuery).map { tasks ->
                     tasks.sortedWith(
-                        compareBy(Task::isImportant, Task::deadline)
+                        when(taskOrder.orderType) {
+                            is OrderType.Ascending -> {
+                                compareBy<Task> { !it.isImportant} .thenBy { it.deadline }
+                            }
+
+                            is OrderType.Descending -> {
+                                compareBy<Task> { !it.isImportant} .thenByDescending { it.deadline }
+                            }
+                        }
                     )
                 }
             }
-            else -> repository.getTasks(categoryName)
-        }
+        }/*.map { tasks ->
+            tasks.filter {
+                !it.completed
+            }
+        }*/
     }
 }
